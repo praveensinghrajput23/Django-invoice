@@ -1,0 +1,67 @@
+<!DOCTYPE html>{% load static%}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <link rel="stylesheet" href="{%static 'css/invoice-template-1.css' %}" media="all" />
+  </head>
+  <body>
+    <header class="clearfix">
+      <div id="logo">
+        <h1> INVOICE #{{invoice_id}}</h1> 
+      </div>
+      <div id="company">
+        <h1 class="name">{{seller}}</h1>
+        <div class="phone"><a href="tel:{{seller_phone}}">{{seller_phone}}</a></div>
+        <div class="address">{{seller_address}}</div>
+      </div>
+      </div>
+    </header>
+    <main>
+      <div id="details" class="clearfix">
+        <div id="client">
+          <div class="to">INVOICE TO:</div>
+          <h2 class="name">{{buyer}}</h2>
+          <div class="phone"><a href="tel:{{buyer_phone}}">{{buyer_phone}}</a></div>
+          <div class="address">{{buyer_address}}</div>
+          
+        </div>
+        <div id="invoice">
+          <h1>#{{invoice_id}}</h1>
+          <div class="date">Date of Invoice: {{date}}</div>
+          
+        </div>
+      </div>
+      <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th class="no">#</th>
+            <th class="desc">SERVICE</th>
+            <th class="unit">RATE</th>
+            <th class="qty">QUANTITY</th>
+            <th class="unit">TAX</th>
+            <th class="total">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+			{% for item in lineitem %}
+          <tr>
+            <td class="no">{{forloop.counter}}</td>
+            <td class="desc">{{item.service}}</td>
+            <td class="unit">${{item.rate}}</td>
+            <td class="qty">{{item.quantity}}</td>
+            <td class="unit">{{item.tax}}%</td>
+            <td class="total">${{item.amount}}</td>
+		  </tr>
+		  {% endfor %}
+        </tbody>
+        <tfoot> 
+          <tr>       
+            <td colspan="5">GRAND TOTAL</td>
+            <td>${{invoice_total}}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <div id="thanks">Thank you!</div> 
+  </body>
+</html>
